@@ -32,6 +32,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
     //Declaration des champs
     TextView mDate,mCity,mTemp,mDescription;
+    TextView mFeels,mHumidity;
     ImageView imgIcon;
     String maVille="Toronto";
 
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         mCity=findViewById(R.id.mCity);
         mTemp=findViewById(R.id.mTemp);
         mDescription=findViewById(R.id.mDescription);
+        mFeels=findViewById(R.id.mFeels);
+        mHumidity=findViewById(R.id.mHumidity);
         afficher(); //appel de la methode
     }
 
@@ -99,7 +102,14 @@ public class MainActivity extends AppCompatActivity {
                     String description=object.getString("description");
                     String city = response.getString("name");
                     String icon=object.getString("icon");
+
+                    int humidity=(int)Math.round(main_object.getDouble("humidity"));
+                    int feels_like=(int)Math.round(main_object.getDouble("feels_like"));
+
                     //mettre les valeurs dans les champs
+
+
+
                     mCity.setText(city);
                     mTemp.setText(temp);
                     mDescription.setText(description);
@@ -112,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
                     // gestion de l'image
                     String imageUri="http://openweathermap.org/img/w/"+ icon+ ".png";
                     imgIcon=findViewById(R.id.imgIcon);
+                    mFeels.setText("Feels like " + feels_like);
+                    mHumidity.setText("Humidity " + humidity);
+
                     Uri myUri=Uri.parse(imageUri);
                     Picasso.with(MainActivity.this).load(myUri).resize(200, 200).into(imgIcon);
 
